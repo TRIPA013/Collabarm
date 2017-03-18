@@ -6,22 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.abhirishi.personal.collabarm.ItemFragment.OnListFragmentInteractionListener;
 import com.abhirishi.personal.collabarm.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder> {
 
 	private final List<DummyItem> mValues;
-	private final OnListFragmentInteractionListener mListener;
+	private final FriendsFragment.OnListFragmentInteractionListener mListener;
 
-	public FriendsRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+	public FriendsRecyclerViewAdapter(List<DummyItem> items, FriendsFragment.OnListFragmentInteractionListener listener) {
 		mValues = items;
 		mListener = listener;
 	}
@@ -29,7 +23,7 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(parent.getContext())
-			.inflate(R.layout.fragment_item, parent, false);
+			.inflate(R.layout.fragment_friends, parent, false);
 		return new ViewHolder(view);
 	}
 

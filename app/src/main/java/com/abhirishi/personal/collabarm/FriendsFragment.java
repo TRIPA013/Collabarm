@@ -67,7 +67,10 @@ public class FriendsFragment extends Fragment {
 				recyclerView.setLayoutManager(new LinearLayoutManager(context));
 			}
 			else {
-				recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+				LinearLayoutManager verticalLayoutmanager
+					= new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+
+				recyclerView.setLayoutManager(verticalLayoutmanager);
 			}
 			recyclerView.setAdapter(new FriendsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
 		}
