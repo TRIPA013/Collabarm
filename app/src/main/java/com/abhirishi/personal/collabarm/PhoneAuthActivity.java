@@ -78,6 +78,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
 						public void run() {
 							phoneNumberContainer.setVisibility(View.GONE);
 							verificationContainer.setVisibility(View.VISIBLE);
+							verificationCodeView.requestFocus();
 						}
 					});
 				}
