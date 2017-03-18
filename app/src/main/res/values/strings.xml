@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Collabarm</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="groups">GROUPS</string>
+    <string name="reminders">REMINDERS</string>
+    <string name="friends">FRIENDS</string>
+    <string name="add_more">Add more</string>
+</resources>
