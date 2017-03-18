@@ -18,4 +18,8 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="title_activity_phone_auth">Verify your phone number</string>
+    <string name="auth0_client_id">EJ381GrISxiqUBaPquOy0hyDESYB5zbV</string>
+    <string name="auth0_domain">abhithaparian.auth0.com</string>
+
 </resources>

@@ -11,7 +11,7 @@ public class FirstActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_first);
 		if (!User.isLoggedIn()) {
-			Intent intent = new Intent(this, RegistrationActivity.class);
+			Intent intent = new Intent(this, PhoneAuthActivity.class);
 			startActivity(intent);
 		}
 		finish();
