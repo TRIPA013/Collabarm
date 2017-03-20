@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "121667052219",
+    "firebase_url": "https://collabarm.firebaseio.com",
+    "project_id": "collabarm",
+    "storage_bucket": "collabarm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121667052219:android:677a358a3944044d",
+        "android_client_info": {
+          "package_name": "com.abhirishi.personal.collabarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121667052219-bq85s3hm6ticoss6nbadva541ri5ncer.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abhirishi.personal.collabarm",
+            "certificate_hash": "07c3e2d011a17cc8a46f516159c7e86a86941735"
+          }
+        },
+        {
+          "client_id": "121667052219-o0maephpg3u097padaculq49ee9hppa7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLxgcnR1G9CQDQI_eC4A3RxPzlex7U7PU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121667052219-o0maephpg3u097padaculq49ee9hppa7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
