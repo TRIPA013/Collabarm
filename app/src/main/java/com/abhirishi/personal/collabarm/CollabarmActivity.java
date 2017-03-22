@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.abhirishi.personal.collabarm.dummy.DummyContent;
+import com.abhirishi.personal.collabarm.models.Friend;
 
 public class CollabarmActivity extends AppCompatActivity implements FriendsFragment.OnListFragmentInteractionListener {
 
@@ -71,7 +71,7 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 	}
 
 	@Override
-	public void onListFragmentInteraction(DummyContent.DummyItem item) {
+	public void onListFragmentInteraction(Friend item) {
 
 	}
 

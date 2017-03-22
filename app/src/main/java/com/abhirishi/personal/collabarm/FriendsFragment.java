@@ -1,17 +1,18 @@
 package com.abhirishi.personal.collabarm;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.abhirishi.personal.collabarm.dummy.DummyContent;
-import com.abhirishi.personal.collabarm.dummy.DummyContent.DummyItem;
-
+import com.abhirishi.personal.collabarm.models.Friend;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,9 +73,54 @@ public class FriendsFragment extends Fragment {
 
 				recyclerView.setLayoutManager(verticalLayoutmanager);
 			}
-			recyclerView.setAdapter(new FriendsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+			recyclerView.setAdapter(new FriendsRecyclerViewAdapter(getAllContacts(context), mListener));
 		}
 		return view;
+	}
+
+	private List<Friend> getAllContacts(Context context) {
+		List<Friend> friendsList = new ArrayList();
+		Friend Friend;
+
+		ContentResolver contentResolver = context.getContentResolver();
+		Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+		if (cursor.getCount() > 0) {
+			while (cursor.moveToNext()) {
+
+				int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
+				if (hasPhoneNumber > 0) {
+					String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+					String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+					Friend = new Friend();
+					Friend.setName(name);
+
+					Cursor phoneCursor = contentResolver.query(
+						ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+						null,
+						ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+						new String[]{id},
+						null);
+					if (phoneCursor.moveToNext()) {
+						String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+						Friend.setPhoneNumber(phoneNumber);
+					}
+
+					phoneCursor.close();
+
+					Cursor emailCursor = contentResolver.query(
+						ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+						null,
+						ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+						new String[]{id}, null);
+					while (emailCursor.moveToNext()) {
+						String emailId = emailCursor.getString(emailCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+					}
+					friendsList.add(Friend);
+				}
+			}
+		}
+		return friendsList;
 	}
 
 
@@ -108,6 +154,6 @@ public class FriendsFragment extends Fragment {
 	 */
 	public interface OnListFragmentInteractionListener {
 		// TODO: Update argument type and name
-		void onListFragmentInteraction(DummyItem item);
+		void onListFragmentInteraction(Friend item);
 	}
 }
