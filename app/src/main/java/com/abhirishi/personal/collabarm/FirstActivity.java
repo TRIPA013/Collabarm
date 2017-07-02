@@ -66,6 +66,7 @@ public class FirstActivity extends AppCompatActivity {
 	}
 
 	private void onAlreadyLoggedIn() {
+//		Intent intent = new Intent(this, PhoneAuthActivity.class);
 		Intent intent = new Intent(this, CollabarmActivity.class);
 		startActivity(intent);
 		finish();
