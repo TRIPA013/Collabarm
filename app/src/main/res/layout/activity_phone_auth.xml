@@ -25,7 +25,7 @@
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/com_auth0_lock_title_text"
+            android:layout_marginBottom="10dp"
             android:text="@string/phone_title_text" />
 
         <TextView
