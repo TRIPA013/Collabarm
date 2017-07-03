@@ -31,7 +31,7 @@ class FirebaseUtil {
             })
         }
 
-        fun checkForFriends(context: Context, friends: List<Friend>, userName: String, friendsListener: FriendsListener?) {
+        fun checkForFriends(friends: List<Friend>, friendsListener: FriendsListener?) {
             database.child(USERS).addValueEventListener(object : ValueEventListener {
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
