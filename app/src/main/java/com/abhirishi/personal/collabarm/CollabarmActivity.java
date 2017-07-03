@@ -109,7 +109,7 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 		public Fragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return FriendsFragment.newInstance(100);
+				return FriendsFragment.Companion.newInstance(100);
 			case 1:
 				return PlaceholderFragment.newInstance(position + 1);
 //			case 2:
