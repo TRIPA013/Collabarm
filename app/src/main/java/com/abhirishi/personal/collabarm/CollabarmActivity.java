@@ -112,15 +112,15 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 				return FriendsFragment.newInstance(100);
 			case 1:
 				return PlaceholderFragment.newInstance(position + 1);
-			case 2:
-				return PlaceholderFragment.newInstance(position + 1);
+//			case 2:
+//				return PlaceholderFragment.newInstance(position + 1);
 			}
 			return null;
 		}
 
 		@Override
 		public int getCount() {
-			return 3;
+			return 2;
 		}
 
 		@Override
@@ -128,9 +128,12 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 			switch (position) {
 			case 0:
 				return getString(R.string.friends);
+//			case 1:
+//				return getString(R.string.groups);
+//			case 2:
+//				return getString(R.string.reminders);
+//			}
 			case 1:
-				return getString(R.string.groups);
-			case 2:
 				return getString(R.string.reminders);
 			}
 			return null;
