@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.abhirishi.personal.collabarm.models.Alarm;
 import com.abhirishi.personal.collabarm.models.Friend;
 
-public class CollabarmActivity extends AppCompatActivity implements FriendsFragment.OnListFragmentInteractionListener {
+public class CollabarmActivity extends AppCompatActivity implements FriendsFragment.OnListFragmentInteractionListener,
+	AlarmsFragment.OnAlarmListFragmentInteractionListener {
 
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -75,6 +77,11 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 
 	}
 
+	@Override
+	public void onListFragmentInteraction(Alarm item) {
+
+	}
+
 	public static class PlaceholderFragment extends Fragment {
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -111,7 +118,7 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 			case 0:
 				return FriendsFragment.Companion.newInstance(100);
 			case 1:
-				return PlaceholderFragment.newInstance(position + 1);
+				return AlarmsFragment.Companion.newInstance(100);
 //			case 2:
 //				return PlaceholderFragment.newInstance(position + 1);
 			}
