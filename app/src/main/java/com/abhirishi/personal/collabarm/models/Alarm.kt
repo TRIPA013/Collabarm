@@ -9,7 +9,7 @@ class Alarm : Comparable<Alarm> {
     var by: String? = null
 
     fun getFormattedAlarmTime(): String {
-        return getDate(milliseconds, "dd/MM/yyyy hh:mm")
+        return getDate(milliseconds, "hh:mm a dd/MM/yyyy")
     }
 
     override fun compareTo(compareAlarm: Alarm): Int {
