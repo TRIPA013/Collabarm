@@ -18,7 +18,8 @@
         <activity
             android:name=".CollabarmActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/title_activity_registration" />
@@ -33,7 +34,17 @@
         </activity>
         <activity
             android:name=".PhoneAuthActivity"
-            android:label="@string/title_activity_phone_auth"></activity>
+            android:label="@string/title_activity_phone_auth" />
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".AlarmActivity"
+            android:label="@string/title_activity_alarm"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -64,7 +64,7 @@ class AlarmsFragment : Fragment(), AlarmsListener {
     }
 
     private fun getAllAlarmsOnCollabarm(context: Context): List<Alarm> {
-        checkForAlarms(FirebaseUtil.getUsername(), this)
+        checkForAlarms(context, FirebaseUtil.getUsername(), this)
         return FirebaseUtil.alarms
     }
 

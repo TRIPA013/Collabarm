@@ -1,12 +1,17 @@
 package com.abhirishi.personal.collabarm.util
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import com.abhirishi.personal.collabarm.AlarmReceiver
 import com.abhirishi.personal.collabarm.AlarmsListener
 import com.abhirishi.personal.collabarm.FriendsListener
 import com.abhirishi.personal.collabarm.models.Alarm
 import com.abhirishi.personal.collabarm.models.Friend
 import com.google.firebase.database.*
 import java.util.*
+
 
 class FirebaseUtil {
 
@@ -17,7 +22,7 @@ class FirebaseUtil {
         var availableFriends = ArrayList<Friend>()
         var alarms = ArrayList<Alarm>()
 
-        fun checkForAlarms(userName: String, alarmsListener: AlarmsListener?) {
+        fun checkForAlarms(context: Context, userName: String, alarmsListener: AlarmsListener?) {
             database.child(ALARMS).child(userName).addValueEventListener(object : ValueEventListener {
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -32,6 +37,8 @@ class FirebaseUtil {
                             alarms.add(alarm)
                         }
                         Collections.sort(alarms)
+                        setAlarms(context)
+
                         alarmsListener?.onAlarmsChange()
                     }
                 }
@@ -40,6 +47,20 @@ class FirebaseUtil {
 
                 }
             })
+        }
+
+        private fun setAlarms(context: Context) {
+            val intent = Intent(context, AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            pendingIntent.cancel()
+            alarmManager.cancel(pendingIntent)
+            for (alarm in alarms) {
+                val intent = Intent(context, AlarmReceiver::class.java)
+                val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
+                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.milliseconds, pendingIntent)
+            }
         }
 
         fun checkForFriends(friends: List<Friend>, friendsListener: FriendsListener?) {
