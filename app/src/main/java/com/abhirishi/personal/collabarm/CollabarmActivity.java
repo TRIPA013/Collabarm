@@ -1,5 +1,6 @@
 package com.abhirishi.personal.collabarm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -74,7 +75,9 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 
 	@Override
 	public void onListFragmentInteraction(Friend item) {
-
+		Intent friendIntent = new Intent(getBaseContext(), FriendActivity.class);
+		friendIntent.putExtra("friend", item);
+		startActivity(friendIntent);
 	}
 
 	@Override

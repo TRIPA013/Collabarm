@@ -103,5 +103,6 @@
     <string name="email_fmt">Email: %s</string>
     <string name="title_activity_alarm">Ringing!!!</string>
     <string name="large_text">This alarm is brought to you by Collabarm</string>
+    <string name="title_activity_friend">FriendActivity</string>
 
 </resources>
