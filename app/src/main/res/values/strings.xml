@@ -104,5 +104,13 @@
     <string name="title_activity_alarm">Ringing!!!</string>
     <string name="large_text">This alarm is brought to you by Collabarm</string>
     <string name="title_activity_friend">FriendActivity</string>
+    <string name="title_set_for">Set For</string>
+    <string name="title_set_by">Set By</string>
+
+    <string-array name="permissions">
+        <item>Always</item>
+        <item>On Demand</item>
+        <item>Never</item>
+    </string-array>
 
 </resources>
