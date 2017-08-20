@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.abhirishi.personal.collabarm.models.Alarm
 import com.abhirishi.personal.collabarm.util.FirebaseUtil
-import com.abhirishi.personal.collabarm.util.FirebaseUtil.Companion.checkForAlarms
+import com.abhirishi.personal.collabarm.util.FirebaseUtil.alarms
+import com.abhirishi.personal.collabarm.util.FirebaseUtil.checkForAlarms
+import com.abhirishi.personal.collabarm.util.FirebaseUtil.checkForAlarmsSet
 
 /**
  * A fragment representing a list of Items.
@@ -27,6 +29,13 @@ class AlarmsFragment(val type: ALARMS = ALARMS.ALL, val friendName: String = "")
 
     var alarmsRecyclerViewAdapter: AlarmsRecyclerViewAdapter? = null
     override fun onAlarmsChange() {
+
+        val alarmsToDisplay = when(type){
+            ALARMS.SET_BY -> getAlarmsSetByUser(friendName)
+            ALARMS.SET_FOR -> getAlarmsSetForUser(context, friendName)
+            ALARMS.ALL -> getAllAlarmsOnCollabarm(context)
+        }
+        alarmsRecyclerViewAdapter?.mValues = alarmsToDisplay
         alarmsRecyclerViewAdapter?.notifyDataSetChanged()
     }
 
@@ -36,6 +45,9 @@ class AlarmsFragment(val type: ALARMS = ALARMS.ALL, val friendName: String = "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        checkForAlarmsSet(context, FirebaseUtil.getUsername(), this)
+        checkForAlarms(context, FirebaseUtil.getUsername(), this)
 
         if (arguments != null) {
             mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
@@ -60,7 +72,7 @@ class AlarmsFragment(val type: ALARMS = ALARMS.ALL, val friendName: String = "")
 
 
             val alarmsToDisplay = when(type){
-                ALARMS.SET_BY -> getAlarmsSetByUser(context, friendName)
+                ALARMS.SET_BY -> getAlarmsSetByUser(friendName)
                 ALARMS.SET_FOR -> getAlarmsSetForUser(context, friendName)
                 ALARMS.ALL -> getAllAlarmsOnCollabarm(context)
             }
@@ -71,17 +83,17 @@ class AlarmsFragment(val type: ALARMS = ALARMS.ALL, val friendName: String = "")
     }
 
     private fun getAlarmsSetForUser(context: Context, friendName: String): List<Alarm> {
-        checkForAlarms(context, FirebaseUtil.getUsername(), this)
-        return FirebaseUtil.alarms
+        val listOfAlarms = FirebaseUtil.alarmsSet.filter { it.by.equals(friendName) }
+        return listOfAlarms
     }
 
-    private fun getAlarmsSetByUser(context: Context, friendName: String): List<Alarm> {
-        checkForAlarms(context, FirebaseUtil.getUsername(), this)
-        return FirebaseUtil.alarms
+    private fun getAlarmsSetByUser(friendName: String): List<Alarm> {
+        val alarms = FirebaseUtil.alarms
+        val listOfAlarms = alarms.filter { it.by.equals(friendName) }
+        return listOfAlarms
     }
 
     private fun getAllAlarmsOnCollabarm(context: Context): List<Alarm> {
-        checkForAlarms(context, FirebaseUtil.getUsername(), this)
         return FirebaseUtil.alarms
     }
 

@@ -35,12 +35,12 @@ public class FriendActivity extends AppCompatActivity implements AlarmsFragment.
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 			switch (item.getItemId()) {
 			case R.id.set_for:
-				setBy.getView().setVisibility(View.VISIBLE);
-				setFor.getView().setVisibility(View.GONE);
+				setFor.getView().setVisibility(View.VISIBLE);
+				setBy.getView().setVisibility(View.GONE);
 				return true;
 			case R.id.set_by:
-				setBy.getView().setVisibility(View.GONE);
-				setFor.getView().setVisibility(View.VISIBLE);
+				setBy.getView().setVisibility(View.VISIBLE);
+				setFor.getView().setVisibility(View.GONE);
 				return true;
 			}
 			return false;

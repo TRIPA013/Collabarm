@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import com.abhirishi.personal.collabarm.models.Friend
 import com.abhirishi.personal.collabarm.util.ContactsUtil.Companion.getAllFriends
 import com.abhirishi.personal.collabarm.util.FirebaseUtil
-import com.abhirishi.personal.collabarm.util.FirebaseUtil.Companion.checkForFriends
+import com.abhirishi.personal.collabarm.util.FirebaseUtil.checkForFriends
 
 /**
  * A fragment representing a list of Items.

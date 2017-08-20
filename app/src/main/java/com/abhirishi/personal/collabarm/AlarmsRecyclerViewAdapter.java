@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecyclerViewAdapter.ViewHolder> {
 
-	private final List<Alarm> mValues;
+	public List<Alarm> mValues;
 	private final AlarmsFragment.OnAlarmListFragmentInteractionListener mListener;
 
 	public AlarmsRecyclerViewAdapter(List<Alarm> items, AlarmsFragment.OnAlarmListFragmentInteractionListener listener) {
