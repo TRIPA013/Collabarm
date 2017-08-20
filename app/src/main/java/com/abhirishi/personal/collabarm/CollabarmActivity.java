@@ -2,8 +2,6 @@ package com.abhirishi.personal.collabarm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -43,15 +41,6 @@ public class CollabarmActivity extends AppCompatActivity implements FriendsFragm
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 		tabLayout.setupWithViewPager(mViewPager);
-
-		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Snackbar.make(view, R.string.add_more, Snackbar.LENGTH_LONG)
-					.setAction("Action", null).show();
-			}
-		});
 
 	}
 
