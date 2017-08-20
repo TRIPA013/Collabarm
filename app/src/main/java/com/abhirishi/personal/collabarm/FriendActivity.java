@@ -2,6 +2,7 @@ package com.abhirishi.personal.collabarm;
 
 import org.jetbrains.annotations.NotNull;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,13 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import com.abhirishi.personal.collabarm.models.Alarm;
 import com.abhirishi.personal.collabarm.models.Friend;
+import com.abhirishi.personal.collabarm.util.FirebaseUtil;
+import java.util.Calendar;
 
-public class FriendActivity extends AppCompatActivity implements AlarmsFragment.OnAlarmListFragmentInteractionListener {
+public class FriendActivity extends AppCompatActivity
+	implements AlarmsFragment.OnAlarmListFragmentInteractionListener, DatePickerDialog.OnDateSetListener {
 
 	private static final int CONTENT_VIEW_ID = 10101010;
 	private Friend friend;
@@ -62,14 +67,13 @@ public class FriendActivity extends AppCompatActivity implements AlarmsFragment.
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				TimePickerDialog timePickerDialog = new TimePickerDialog(FriendActivity.this,
-					new TimePickerDialog.OnTimeSetListener() {
-						@Override
-						public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-						}
-					}, 10, 10, false);
-				timePickerDialog.show();
+				Calendar instance = Calendar.getInstance();
+				int year = instance.get(Calendar.YEAR);
+				int day = instance.get(Calendar.DATE);
+				int month = instance.get(Calendar.MONTH);
+				DatePickerDialog datePickerDialog = new DatePickerDialog(FriendActivity.this, FriendActivity.this, year,
+					month, day);
+				datePickerDialog.show();
 			}
 		});
 
@@ -96,8 +100,26 @@ public class FriendActivity extends AppCompatActivity implements AlarmsFragment.
 
 	}
 
+	private void showTimePicker(final int year, final int month, final int dayOfMonth) {
+		TimePickerDialog timePickerDialog = new TimePickerDialog(FriendActivity.this,
+			new TimePickerDialog.OnTimeSetListener() {
+				@Override
+				public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+					Calendar instance = Calendar.getInstance();
+					instance.set(year,month,dayOfMonth, hourOfDay,minute);
+					FirebaseUtil.setAlarmFor(FirebaseUtil.getUsername(), friend.getName(), instance.getTimeInMillis());
+				}
+			}, 10, 10, false);
+		timePickerDialog.show();
+	}
+
 	@Override
 	public void onListFragmentInteraction(@NotNull Alarm item) {
 
+	}
+
+	@Override
+	public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+		showTimePicker(year, month, dayOfMonth);
 	}
 }

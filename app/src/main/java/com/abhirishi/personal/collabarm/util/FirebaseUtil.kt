@@ -9,7 +9,10 @@ import com.abhirishi.personal.collabarm.AlarmsListener
 import com.abhirishi.personal.collabarm.FriendsListener
 import com.abhirishi.personal.collabarm.models.Alarm
 import com.abhirishi.personal.collabarm.models.Friend
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
@@ -33,21 +36,20 @@ object FirebaseUtil {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 alarms.clear()
                 dataSnapshot.children.forEach { it ->
-
-                    val alarmSetters = it.value as HashMap<String, Long>
-                    alarmSetters.forEach { _, value ->
-                        if(value >= System.currentTimeMillis()) {
-                            val alarm = Alarm()
-                            alarm.by = it.key as String
-                            alarm.milliseconds = value
-                            alarms.add(alarm)
-                        }
+                    val setBy = it.key
+                    val alarmSetters = it.value as HashMap<String, HashMap<String, String>>
+                    for(key in alarmSetters.keys) {
+                        val hashMap = alarmSetters[key]
+                        val milliseconds = hashMap!!["milliseconds"] as Long
+                        val alarm = Alarm()
+                        alarm.by = setBy
+                        alarm.milliseconds = milliseconds
+                        alarms.add(alarm)
                     }
-                    Collections.sort(alarms)
-                    setAlarms(context)
-
-                    alarmsListener?.onAlarmsChange()
                 }
+                Collections.sort(alarms)
+                setAlarms(context)
+                alarmsListener?.onAlarmsChange()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -73,7 +75,7 @@ object FirebaseUtil {
 
                     val alarmSetters = it.value as HashMap<String, Long>
                     alarmSetters.forEach { _, value ->
-                        if(value >= System.currentTimeMillis()) {
+                        if (value >= System.currentTimeMillis()) {
                             val alarm = Alarm()
                             alarm.by = it.key as String
                             alarm.milliseconds = value
@@ -131,16 +133,20 @@ object FirebaseUtil {
     }
 
 
-    fun setAlarmFor(context: Context, userName: String, forUser: String, milliseconds: String) {
-        database.child(ALARMS).child(forUser).runTransaction(object : Transaction.Handler {
-            override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                return Transaction.success(mutableData)
-            }
+    @JvmStatic fun setAlarmFor(userName: String, forUser: String, milliseconds: Long) {
+        //for testing purpose
+        val temp = forUser
+        val forUser = userName
+        val userName = temp
 
-            override fun onComplete(databaseError: DatabaseError?, b: Boolean,
-                                    dataSnapshot: DataSnapshot?) {
-            }
-        })
+        val child = database.child(ALARMS).child(forUser)
+        child.push()
+        val newerPostRef = child.child(userName)
+        newerPostRef.push()
+        val value = Alarm()
+        value.by = userName
+        value.milliseconds = milliseconds
+        newerPostRef.push().setValue(value)
     }
 
 

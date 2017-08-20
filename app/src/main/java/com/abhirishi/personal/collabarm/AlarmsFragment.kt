@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.abhirishi.personal.collabarm.models.Alarm
 import com.abhirishi.personal.collabarm.util.FirebaseUtil
-import com.abhirishi.personal.collabarm.util.FirebaseUtil.alarms
 import com.abhirishi.personal.collabarm.util.FirebaseUtil.checkForAlarms
 import com.abhirishi.personal.collabarm.util.FirebaseUtil.checkForAlarmsSet
 
@@ -29,14 +28,15 @@ class AlarmsFragment(val type: ALARMS = ALARMS.ALL, val friendName: String = "")
 
     var alarmsRecyclerViewAdapter: AlarmsRecyclerViewAdapter? = null
     override fun onAlarmsChange() {
-
-        val alarmsToDisplay = when(type){
-            ALARMS.SET_BY -> getAlarmsSetByUser(friendName)
-            ALARMS.SET_FOR -> getAlarmsSetForUser(context, friendName)
-            ALARMS.ALL -> getAllAlarmsOnCollabarm(context)
+        if(this.isAdded) {
+            val alarmsToDisplay = when (type) {
+                ALARMS.SET_BY -> getAlarmsSetByUser(friendName)
+                ALARMS.SET_FOR -> getAlarmsSetForUser(context, friendName)
+                ALARMS.ALL -> getAllAlarmsOnCollabarm(context)
+            }
+            alarmsRecyclerViewAdapter?.mValues = alarmsToDisplay
+            alarmsRecyclerViewAdapter?.notifyDataSetChanged()
         }
-        alarmsRecyclerViewAdapter?.mValues = alarmsToDisplay
-        alarmsRecyclerViewAdapter?.notifyDataSetChanged()
     }
 
     // TODO: Customize parameters
