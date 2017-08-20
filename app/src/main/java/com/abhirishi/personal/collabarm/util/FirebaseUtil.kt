@@ -50,16 +50,18 @@ class FirebaseUtil {
         }
 
         private fun setAlarms(context: Context) {
-            val intent = Intent(context, AlarmReceiver::class.java)
+                val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             pendingIntent.cancel()
             alarmManager.cancel(pendingIntent)
             for (alarm in alarms) {
-                val intent = Intent(context, AlarmReceiver::class.java)
-                val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
-                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.milliseconds, pendingIntent)
+                if(alarm.milliseconds >= System.currentTimeMillis()) {
+                    val intent = Intent(context, AlarmReceiver::class.java)
+                    val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
+                    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.milliseconds, pendingIntent)
+                }
             }
         }
 

@@ -1,25 +1,30 @@
 package com.abhirishi.personal.collabarm;
 
+import org.jetbrains.annotations.NotNull;
+
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
+import com.abhirishi.personal.collabarm.models.Alarm;
 import com.abhirishi.personal.collabarm.models.Friend;
 
-public class FriendActivity extends AppCompatActivity {
+public class FriendActivity extends AppCompatActivity implements AlarmsFragment.OnAlarmListFragmentInteractionListener {
 
+	private static final int CONTENT_VIEW_ID = 10101010;
 	private Friend friend;
 
-	private TextView mTextMessage;
 
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
 		= new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -28,10 +33,8 @@ public class FriendActivity extends AppCompatActivity {
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 			switch (item.getItemId()) {
 			case R.id.navigation_home:
-				mTextMessage.setText(R.string.title_activity_alarm);
 				return true;
 			case R.id.navigation_dashboard:
-				mTextMessage.setText(R.string.title_activity_alarm);
 				return true;
 			}
 			return false;
@@ -64,7 +67,17 @@ public class FriendActivity extends AppCompatActivity {
 			}
 		});
 
-		mTextMessage = (TextView) findViewById(R.id.message);
+		FrameLayout content = (FrameLayout) findViewById(R.id.content);
+		//noinspection ResourceType
+		content.setId(CONTENT_VIEW_ID);
+		if (savedInstanceState == null) {
+			Fragment mFragment = new AlarmsFragment();
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			//noinspection ResourceType
+			ft.add(CONTENT_VIEW_ID, mFragment).commit();
+		}
+
+
 		BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 		navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_nav);
@@ -72,6 +85,12 @@ public class FriendActivity extends AppCompatActivity {
 			R.array.permissions, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
+
+
 	}
 
+	@Override
+	public void onListFragmentInteraction(@NotNull Alarm item) {
+
+	}
 }
