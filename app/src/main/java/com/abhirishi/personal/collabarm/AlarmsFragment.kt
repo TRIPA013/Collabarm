@@ -23,7 +23,7 @@ import com.abhirishi.personal.collabarm.util.FirebaseUtil.Companion.checkForAlar
  * Mandatory empty constructor for the fragment manager to instantiate the
  * fragment (e.g. upon screen orientation changes).
  */
-class AlarmsFragment : Fragment(), AlarmsListener {
+class AlarmsFragment(val type: ALARMS = ALARMS.ALL, val friendName: String = "") : Fragment(), AlarmsListener {
 
     var alarmsRecyclerViewAdapter: AlarmsRecyclerViewAdapter? = null
     override fun onAlarmsChange() {
@@ -57,10 +57,27 @@ class AlarmsFragment : Fragment(), AlarmsListener {
 
                 recyclerView.layoutManager = verticalLayoutmanager
             }
-            alarmsRecyclerViewAdapter = AlarmsRecyclerViewAdapter(getAllAlarmsOnCollabarm(context), mListener)
+
+
+            val alarmsToDisplay = when(type){
+                ALARMS.SET_BY -> getAlarmsSetByUser(context, friendName)
+                ALARMS.SET_FOR -> getAlarmsSetForUser(context, friendName)
+                ALARMS.ALL -> getAllAlarmsOnCollabarm(context)
+            }
+            alarmsRecyclerViewAdapter = AlarmsRecyclerViewAdapter(alarmsToDisplay, mListener)
             recyclerView.adapter = alarmsRecyclerViewAdapter
         }
         return view
+    }
+
+    private fun getAlarmsSetForUser(context: Context, friendName: String): List<Alarm> {
+        checkForAlarms(context, FirebaseUtil.getUsername(), this)
+        return FirebaseUtil.alarms
+    }
+
+    private fun getAlarmsSetByUser(context: Context, friendName: String): List<Alarm> {
+        checkForAlarms(context, FirebaseUtil.getUsername(), this)
+        return FirebaseUtil.alarms
     }
 
     private fun getAllAlarmsOnCollabarm(context: Context): List<Alarm> {
@@ -110,4 +127,10 @@ class AlarmsFragment : Fragment(), AlarmsListener {
             return fragment
         }
     }
+}
+
+enum class ALARMS {
+    SET_BY,
+    SET_FOR,
+    ALL
 }

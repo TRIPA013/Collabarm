@@ -24,6 +24,8 @@ public class FriendActivity extends AppCompatActivity implements AlarmsFragment.
 
 	private static final int CONTENT_VIEW_ID = 10101010;
 	private Friend friend;
+	private Fragment setBy;
+	private Fragment setFor;
 
 
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -32,9 +34,13 @@ public class FriendActivity extends AppCompatActivity implements AlarmsFragment.
 		@Override
 		public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 			switch (item.getItemId()) {
-			case R.id.navigation_home:
+			case R.id.set_for:
+				setBy.getView().setVisibility(View.VISIBLE);
+				setFor.getView().setVisibility(View.GONE);
 				return true;
-			case R.id.navigation_dashboard:
+			case R.id.set_by:
+				setBy.getView().setVisibility(View.GONE);
+				setFor.getView().setVisibility(View.VISIBLE);
 				return true;
 			}
 			return false;
@@ -71,10 +77,11 @@ public class FriendActivity extends AppCompatActivity implements AlarmsFragment.
 		//noinspection ResourceType
 		content.setId(CONTENT_VIEW_ID);
 		if (savedInstanceState == null) {
-			Fragment mFragment = new AlarmsFragment();
+			setBy = new AlarmsFragment(ALARMS.SET_BY, friend.getName());
+			setFor = new AlarmsFragment(ALARMS.SET_FOR, friend.getName());
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			//noinspection ResourceType
-			ft.add(CONTENT_VIEW_ID, mFragment).commit();
+			ft.add(CONTENT_VIEW_ID, setBy).add(CONTENT_VIEW_ID, setFor).commit();
 		}
 
 

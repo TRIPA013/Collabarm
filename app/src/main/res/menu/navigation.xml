@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/set_for"
         android:icon="@drawable/ic_alarm"
         android:title="@string/title_set_for" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/set_by"
         android:icon="@drawable/ic_alarm"
         android:title="@string/title_set_by" />
 
