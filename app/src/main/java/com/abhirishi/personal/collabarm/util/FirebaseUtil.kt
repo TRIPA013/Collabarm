@@ -108,6 +108,7 @@ object FirebaseUtil {
                 val pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0)
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.milliseconds, pendingIntent)
+                break
             }
         }
     }

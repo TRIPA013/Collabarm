@@ -106,7 +106,7 @@ public class FriendActivity extends AppCompatActivity
 				@Override
 				public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 					Calendar instance = Calendar.getInstance();
-					instance.set(year,month,dayOfMonth, hourOfDay,minute);
+					instance.set(year, month, dayOfMonth, hourOfDay, minute);
 					FirebaseUtil.setAlarmFor(FirebaseUtil.getUsername(), friend.getName(), instance.getTimeInMillis());
 				}
 			}, 10, 10, false);
